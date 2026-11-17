@@ -1,2 +1,3 @@
-# silverplate-nova-x-inscription
-NOVA X · soirée de lancement · inscription et accueil des invités (SN Silverplate Services)
+# NOVA X · soirée de lancement
+
+Site d'inscription et d'accueil des invités, organisé par SN Silverplate Services. Données d'exemple.
