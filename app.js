@@ -14,7 +14,7 @@ function tick(){var r=Math.max(0,EV-Date.now());
 tick();setInterval(tick,1000);
 
 /* jauge */
-var BASE=237;
+var BASE=260;
 function jauge(){var n=Math.min(CAP,BASE+load(LS).length);$('#jn').textContent=n;$('#jr').textContent=(CAP-n)+' places restantes';$('#jf').style.width=(n/CAP*100)+'%';}
 setTimeout(jauge,300);
 
