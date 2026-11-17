@@ -65,7 +65,7 @@ $('#ics').addEventListener('click',function(){
 /* accueil des invités */
 var LISTE=null;
 function liste(cb){if(LISTE)return cb(LISTE);
- fetch('invites-exemple.json?v=1').then(function(r){return r.json()}).then(function(j){LISTE=j;cb(j)}).catch(function(){LISTE=[];cb(LISTE)})}
+ fetch('invites-exemple.json?v=2').then(function(r){return r.json()}).then(function(j){LISTE=j;cb(j)}).catch(function(){LISTE=[];cb(LISTE)})}
 function tous(){var loc=load(LS).map(function(d){return {c:d.code,n:d.civ+' '+d.prenom+' '+d.nom,s:d.ent,p:d.pro,t:null,a:d.acc,loc:1}});return (LISTE||[]).concat(loc)}
 function hh(){var d=new Date();return p2(d.getHours())+' h '+p2(d.getMinutes())}
 function majAccueil(){liste(function(){
