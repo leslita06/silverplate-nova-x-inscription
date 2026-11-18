@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <nav id="nav"><div class="wrap">
@@ -20,9 +20,14 @@
   <li><a href="#programme">Programme</a></li>
   <li><a href="#lieu">Lieu</a></li>
   <li><a href="#infos">Infos pratiques</a></li>
+  <li><a href="#billet">Mon billet</a></li>
   <li><a href="#/accueil" class="acc-link">Accueil des invités</a></li>
  </ul>
  <a class="btn sm" href="#inscription">Je m'inscris</a>
+ <button class="burger" type="button" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+</div>
+<div class="mnav" id="mnav" hidden>
+ <a href="#programme">Programme</a><a href="#lieu">Lieu et accès</a><a href="#infos">Infos pratiques</a><a href="#billet" id="m-billet">Retrouver mon billet</a><a href="#/accueil">Accueil des invités (équipe)</a>
 </div></nav>
 
 <main id="public">
@@ -73,6 +78,11 @@
   <div class="kicker">Lieu</div>
   <h2>Sofitel Abidjan Hôtel Ivoire</h2>
   <p class="addr"><strong>Boulevard Hassan II</strong>Cocody, Abidjan, Côte d'Ivoire</p>
+  <ul class="acces">
+   <li><b>Arrivée</b>Accueil des invités dès 19 h, révélation à 20 h précises.</li>
+   <li><b>À l'entrée</b>QR code sur le téléphone ou imprimé, une personne par billet.</li>
+   <li><b>Stationnement</b>Indications envoyées avec le rappel de la veille.</li>
+  </ul>
   <div class="btns">
    <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=Sofitel+Abidjan+H%C3%B4tel+Ivoire">Itinéraire Google Maps</a>
    <a class="btn ghost" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=5.32648&amp;mlon=-4.00432#map=17/5.32648/-4.00432">OpenStreetMap</a>
@@ -80,7 +90,7 @@
   <div class="jauge">
    <div class="row"><span>Places confirmées</span><span><b id="jn">260</b> / 300</span></div>
    <div class="bar"><div class="fill" id="jf"></div></div>
-   <div class="row"><span>Jauge d'exemple</span><span id="jr">40 places restantes</span></div>
+   <div class="row"><span>300 places au total</span><span id="jr">40 places restantes</span></div>
   </div>
  </div>
  <div class="map">
@@ -98,7 +108,8 @@
   <details><summary>Quelle tenue ?</summary><p>Tenue de soirée recommandée.</p></details>
   <details><summary>À quelle heure arriver ?</summary><p>L'accueil ouvre à 19 h. La révélation commence à 20 h précises : nous vous conseillons d'arriver avant 19 h 45.</p></details>
   <details><summary>J'ai un régime alimentaire particulier.</summary><p>Indiquez-le dans le formulaire d'inscription, l'équipe d'accueil le transmettra au service du dîner.</p></details>
-  <details><summary>Je ne peux plus venir.</summary><p>Prévenez l'équipe d'accueil au plus tôt : votre place pourra être proposée à un autre invité.</p></details>
+  <details><summary>Je ne peux plus venir.</summary><p>Ouvrez <a href="#billet">Mon billet</a> et touchez « Je ne peux plus venir » : votre place est libérée pour un autre invité. Vous pouvez aussi répondre au message d'invitation reçu.</p></details>
+  <details><summary>J'ai perdu mon QR code.</summary><p>Ouvrez <a href="#billet">Mon billet</a> et saisissez l'e-mail utilisé à l'inscription. Le soir même, donnez simplement votre nom à l'accueil : la liste des invités fait foi.</p></details>
  </div>
 </div></section>
 
@@ -115,6 +126,7 @@
   <p class="ex">Page d'exemple : aucune donnée n'est enregistrée sur un serveur, aucun message n'est envoyé.</p>
  </div>
  <div class="card">
+  <div class="closed" id="closed" hidden><div class="kicker" id="cl-k">Inscriptions closes</div><p id="cl-p"></p></div>
   <form id="f" novalidate>
    <div class="civ full">
     <label class="lab">Civilité</label>
@@ -165,16 +177,30 @@
     <div class="tk-foot"><img src="img/silverplate.png" alt=""><span>Organisé par SN Silverplate Services</span></div>
    </div>
    <div class="ok-btns">
-    <button class="btn" type="button" id="ics">Ajouter à mon agenda</button>
+    <a class="btn" id="wa" target="_blank" rel="noopener" href="#">Garder mon billet sur WhatsApp</a>
+    <a class="btn ghost" id="gcal" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=NOVA%20X%20%C2%B7%20Soir%C3%A9e%20de%20lancement&amp;dates=20270211T190000Z/20270211T230000Z&amp;location=Sofitel%20Abidjan%20H%C3%B4tel%20Ivoire%2C%20boulevard%20Hassan%20II%2C%20Cocody%2C%20Abidjan">Agenda Google</a>
+    <button class="btn ghost" type="button" id="ics">Autre agenda (iPhone, Outlook)</button>
     <button class="btn ghost" type="button" id="print">Imprimer mon billet</button>
     <button class="btn ghost" type="button" id="again">Inscrire une autre personne</button>
    </div>
+   <p class="annul"><button class="link" type="button" id="cancel">Je ne peux plus venir</button></p>
    <div class="msg">
     <div class="msg-h">Message de confirmation (aperçu, non envoyé)</div>
     <p id="msg"></p>
    </div>
   </div>
  </div>
+</div></section>
+
+<section id="billet" class="billet"><div class="wrap">
+ <div class="kicker">Mon billet</div>
+ <h2>Retrouver mon billet</h2>
+ <p class="lead">Saisissez l'e-mail utilisé à l'inscription : votre billet et son QR code s'affichent.</p>
+ <form id="bf" class="bf" novalidate>
+  <label>E-mail<input id="bm" type="email" autocomplete="email" placeholder="vous@entreprise.ci"></label>
+  <button class="btn" type="submit">Afficher mon billet</button>
+ </form>
+ <p class="err" id="berr" role="alert"></p>
 </div></section>
 </main>
 
@@ -215,7 +241,7 @@
  </div>
 </div></footer>
 
-<script src="qrcode.min.js?v=2"></script>
-<script src="app.js?v=2"></script>
+<script src="qrcode.min.js?v=3"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
