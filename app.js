@@ -21,7 +21,7 @@ setTimeout(jauge,300);
 
 /* routes */
 function route(){var h=location.hash,acc=h==='#/accueil',etait=$('#public').hidden;
- $('#public').hidden=acc;$('#accueil').hidden=!acc;
+ $('#public').hidden=acc;$('#accueil').hidden=!acc;document.body.classList.toggle('acc',acc);
  document.querySelector('.acc-link').classList.toggle('on',acc);
  if(acc){window.scrollTo(0,0);majAccueil();return}
  if(h==='#/'){window.scrollTo(0,0);return}
@@ -31,6 +31,14 @@ window.addEventListener('hashchange',function(){$('#mnav').hidden=true;$('#burge
 $('#burger').addEventListener('click',function(){var m=$('#mnav');m.hidden=!m.hidden;this.setAttribute('aria-expanded',String(!m.hidden))});
 document.querySelectorAll('#mnav a').forEach(function(a){a.addEventListener('click',function(){$('#mnav').hidden=true})});
 route();
+
+/* effets : barre de navigation, apparition au défilement */
+var nav=$('#nav');function navs(){nav.classList.toggle('solid',window.scrollY>40)}
+window.addEventListener('scroll',navs,{passive:true});navs();
+(function(){var els=document.querySelectorAll('.rv');
+ if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+ var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+ els.forEach(function(e){io.observe(e)});})();
 
 /* inscription */
 var f=$('#f');
@@ -96,7 +104,7 @@ $('#ics').addEventListener('click',function(){
 /* accueil des invités */
 var LISTE=null;
 function liste(cb){if(LISTE)return cb(LISTE);
- fetch('invites-exemple.json?v=2').then(function(r){return r.json()}).then(function(j){LISTE=j;cb(j)}).catch(function(){LISTE=[];cb(LISTE)})}
+ fetch('invites.json?v=4').then(function(r){return r.json()}).then(function(j){LISTE=j;cb(j)}).catch(function(){LISTE=[];cb(LISTE)})}
 function tous(){var loc=load(LS).filter(function(d){return d.code&&!d.annule}).map(function(d){return {c:d.code,n:d.civ+' '+d.prenom+' '+d.nom,s:d.ent,p:d.pro,t:null,a:d.acc,loc:1}});return (LISTE||[]).concat(loc)}
 function hh(){var d=new Date();return p2(d.getHours())+' h '+p2(d.getMinutes())}
 function majAccueil(){liste(function(){
