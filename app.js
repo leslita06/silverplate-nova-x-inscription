@@ -69,14 +69,14 @@ function afficher(d,info){
  document.querySelectorAll('.ok-btns > *').forEach(function(x){x.hidden=x.id!=='again'&&!!(d.attente||d.annule)});
  $('#cancel').parentNode.hidden=!!d.annule;
  $('#cancel').textContent=d.attente?'Retirer ma demande':'Je ne peux plus venir';
- $('#code').textContent=d.code;$('#tk-n').textContent=d.civ+' '+d.prenom+' '+d.nom;$('#tk-p').textContent=proLib+' · '+d.ent;
+ $('#code').textContent=d.code;$('#tk-n').textContent=d.civ+' '+d.prenom+' '+d.nom;$('#tk-p').textContent=proLib+', '+d.ent;
  var a=$('#tk-acc');a.hidden=!d.acc;a.textContent='Accompagnant prévu : son QR code lui sera remis par l\'équipe d\'accueil.';
  var q=$('#qr');q.innerHTML='';
  if(d.code&&window.QRCode){new QRCode(q,{text:d.code,width:380,height:380,colorDark:'#262C51',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});}
  else if(d.code) q.textContent='QR code indisponible hors connexion : présentez le code ci-dessous.';
  var txt='Bonjour '+d.civ+' '+d.nom+',\n\n'+(d.attente?'Votre demande pour la soirée de lancement du NOVA X est sur liste d\'attente. Nous vous écrivons dès qu\'une place se libère.':'Votre inscription à la soirée de lancement du NOVA X est confirmée : jeudi 11 février 2027, 19 h, Sofitel Abidjan Hôtel Ivoire (boulevard Hassan II, Cocody).\n\nVotre code d\'entrée : '+d.code+'. Présentez le QR code à l\'accueil.\n'+(d.reg!=='Aucun'?'Régime noté : '+d.reg.toLowerCase()+'.\n':'')+'\nNous vous enverrons un rappel la veille.')+'\n\nL\'équipe d\'accueil NOVA X\nSN Silverplate Services, pour NOVA Électronique';
  $('#msg').textContent=txt;document.querySelector('.msg').hidden=!!d.annule;
- $('#wa').href='https://wa.me/?text='+encodeURIComponent('NOVA X · Soirée de lancement\nJeudi 11 février 2027, 19 h, Sofitel Abidjan Hôtel Ivoire\nMon code d\'entrée : '+d.code+'\nMon billet : '+location.origin+location.pathname+'#billet');
+ $('#wa').href='https://wa.me/?text='+encodeURIComponent('NOVA X, soirée de lancement\nJeudi 11 février 2027, 19 h, Sofitel Abidjan Hôtel Ivoire\nMon code d\'entrée : '+d.code+'\nMon billet : '+location.origin+location.pathname+'#billet');
  f.hidden=true;$('#closed').hidden=true;$('#ok').hidden=false;
  var t=$('#ok');window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});
 }
@@ -97,7 +97,7 @@ function ouvert(){var clos=Date.now()>LIM;$('#closed').hidden=!clos;f.hidden=clo
 ouvert();
 $('#print').addEventListener('click',function(){window.print()});
 $('#ics').addEventListener('click',function(){
- var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SN Silverplate Services//NOVA X//FR','BEGIN:VEVENT','UID:'+(dernier?dernier.code:'novax')+'@novax-lancement','DTSTAMP:20270101T000000Z','DTSTART:20270211T190000Z','DTEND:20270211T230000Z','SUMMARY:NOVA X · Soirée de lancement','LOCATION:Sofitel Abidjan Hôtel Ivoire\\, boulevard Hassan II\\, Cocody\\, Abidjan','DESCRIPTION:Code d\'entrée : '+(dernier?dernier.code:'')+'. Organisé par SN Silverplate Services.','BEGIN:VALARM','TRIGGER:-PT3H','ACTION:DISPLAY','DESCRIPTION:NOVA X ce soir','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+ var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SN Silverplate Services//NOVA X//FR','BEGIN:VEVENT','UID:'+(dernier?dernier.code:'novax')+'@novax-lancement','DTSTAMP:20270101T000000Z','DTSTART:20270211T190000Z','DTEND:20270211T230000Z','SUMMARY:NOVA X, soirée de lancement','LOCATION:Sofitel Abidjan Hôtel Ivoire\\, boulevard Hassan II\\, Cocody\\, Abidjan','DESCRIPTION:Code d\'entrée : '+(dernier?dernier.code:'')+'. Organisé par SN Silverplate Services.','BEGIN:VALARM','TRIGGER:-PT3H','ACTION:DISPLAY','DESCRIPTION:NOVA X ce soir','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
  var b=new Blob([ics],{type:'text/calendar'}),u=URL.createObjectURL(b),x=document.createElement('a');x.href=u;x.download='nova-x-11-fevrier-2027.ics';document.body.appendChild(x);x.click();x.remove();setTimeout(function(){URL.revokeObjectURL(u)},2000);
 });
 
@@ -125,7 +125,7 @@ function controler(v){liste(function(){
  if(deja){res('warn','Déjà entré',[{t:g.n,cls:'who'},{t:'Entrée enregistrée à '+deja.h+'. Ne pas laisser entrer une seconde fois sans le chef d\'accueil.'}]);return}
  pr.push({c:v,h:hh()});save(LP,pr);
  var lab={Influenceur:'Créateur de contenu'}[g.p]||g.p;
- var L=[{t:g.n,cls:'who'},{t:lab+' · '+g.s}];
+ var L=[{t:g.n,cls:'who'},{t:lab+', '+g.s}];
  if(g.a)L.push({t:'Avec un accompagnant prévu'});
  L.push({t:g.t?'Table '+g.t:'Table à attribuer à l\'accueil',cls:'tb'});
  res('ok','Bienvenue',L);majAccueil();
